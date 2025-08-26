@@ -7,6 +7,8 @@ It’s not just a Linktree it’s a **gateway into decentralized AI**.
 
 ---
 
+_*The focus in developing this application is to replace the linktree that has been used by the cortensor network, the hope is that this application can be an option for users to learn about the cortensor network as well as directly try out AI that is validated directly by miners on the network, this is still an early stage so please understand if there are still many shortcomings and will continue to be updated if necessary._
+
 ## Features
 - **Linktree-style navigation** for $COR ecosystem (Socials, Docs, Testnet, About)
 - **Ask Cortensor AI** — Ask questions & get **real-time decentralized AI answers**
