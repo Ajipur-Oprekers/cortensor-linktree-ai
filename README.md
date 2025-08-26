@@ -16,10 +16,10 @@ It’s not just a Linktree it’s a **gateway into decentralized AI**.
 
 ---
 
-## Website Preview
+## Preview
 [Website Screenshot](https://drive.google.com/file/d/1EaINqffsuxf-39f-UfR4UsAjy7H2Sfxo/view?usp=sharing)
 
-## Video Demo
+## Demo
 [Watch Demo Video](https://drive.google.com/file/d/1M3Z0HNTkzVokCqT9mx8n3jyKJ-4rQAUW/view?usp=sharing)
 
 ---
