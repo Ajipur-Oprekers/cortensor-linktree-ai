@@ -22,6 +22,9 @@ It’s not just a Linktree it’s a **gateway into decentralized AI**.
 ## Demo
 [Watch Demo Video](https://drive.google.com/file/d/1M3Z0HNTkzVokCqT9mx8n3jyKJ-4rQAUW/view?usp=sharing)
 
+## Live Apps
+https://cortensor-linktree-ai.vercel.app/
+
 ---
 
 ## Clone the Repository
