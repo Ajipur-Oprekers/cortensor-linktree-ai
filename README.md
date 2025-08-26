@@ -7,12 +7,12 @@ It’s not just a Linktree it’s a **gateway into decentralized AI**.
 
 ---
 
-## ✨ Features
-- 🎨 **Linktree-style navigation** for $COR ecosystem (Socials, Docs, Testnet, About)
-- 🤖 **Ask Cortensor AI** — Ask questions & get **real-time decentralized AI answers**
-- 🔒 **Miner Proof** — Every answer is verified & backed by Cortensor nodes
-- 📱 **Responsive UI** — Clean layout for both Mobile & Desktop
-- 🖥️ Built with **Next.js + TailwindCSS + Framer Motion**
+## Features
+- **Linktree-style navigation** for $COR ecosystem (Socials, Docs, Testnet, About)
+- **Ask Cortensor AI** — Ask questions & get **real-time decentralized AI answers**
+- **Miner Proof** — Every answer is verified & backed by Cortensor nodes
+- **Responsive UI** — Clean layout for both Mobile & Desktop
+- Built with **Next.js + TailwindCSS + Framer Motion**
 
 ---
 
