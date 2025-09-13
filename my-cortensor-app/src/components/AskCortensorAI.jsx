@@ -195,7 +195,7 @@ export default function AskCortensorAI({ isMenuActive }) {
                     className="border rounded px-2 py-1 text-sm disabled:bg-gray-200 disabled:text-gray-500"
                   >
                     {modelOptions.map((m) => (
-                      <option key={m} value={m} disabled={m !== "Qwen2.5 Coder 14B Instruct Q4"}>
+                      <option key={m} value={m} disabled={m !== "LLaVA 1.5 7B Q4"}>
                         {m}
                       </option>
                     ))}
@@ -307,5 +307,6 @@ export default function AskCortensorAI({ isMenuActive }) {
     </>
   );
 }
+
 
 
