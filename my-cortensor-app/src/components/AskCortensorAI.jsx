@@ -16,8 +16,8 @@ export default function AskCortensorAI({ isMenuActive }) {
   const [selectedModel, setSelectedModel] = useState("LLaVA 1.5 7B Q4");
 
   const modelOptions = [
-    "Qwen2.5 Coder 14B Instruct Q4",
     "LLaVA 1.5 7B Q4",
+    "Qwen2.5 Coder 14B Instruct Q4",
     "DeepSeek R1 Distill Llama 8B Q4",
     "LLaMA 3.1 8B Q4",
     "Mistral 7B Q4",
@@ -307,4 +307,5 @@ export default function AskCortensorAI({ isMenuActive }) {
     </>
   );
 }
+
 
