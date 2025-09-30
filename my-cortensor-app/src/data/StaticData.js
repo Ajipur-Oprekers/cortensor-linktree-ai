@@ -5,6 +5,7 @@ export const staticResponses = {
   "LinkedIn": "Follow our official LinkedIn page here: https://www.linkedin.com/company/cortensor",
   "GitHub": "Check our latest repository here: https://github.com/cortensor\nDon’t forget to give us stars!",
   "Discord": "Haven’t joined our Discord yet? Join here: https://discord.com/invite/cortensor\nEnjoy!",
+  "Farcaster": "Follow our official Farcaster page here: https://farcaster.xyz/cortensor",
 
   // 💠 About $COR
   "CertiK": "Team Verification Status:\n\nBronze\nCore Team Member\nProject Age\nGithub Account Age\nImpact Indicator\n\nSince 12/16/2024\n1 Verified\n1 Years +\n1 Years +\nHigh\n\nFull report: https://skynet.certik.com/projects/cortensor",
@@ -19,8 +20,10 @@ export const staticResponses = {
   "Phase 3 Testing": "Our Focus:\n- Node Reputation tuning & stability improvements\n- Iterating Node Pool logic for Ephemeral Sessions\n- Network-level stress testing across all modules\n- Module migration functionality – testing & refinement\n- Desktop App testing (auto-installation to runtime)\n- Continued Session UI & User Task flow iterations\n\nDetails: https://docs.cortensor.network/community-and-ecosystem/community-testing/closed-alpha-testing-phase-3\nStatus: Complete",
   "Phase 4 Testing": "Our Focus:\n- Dynamic node shuffling (NodeUtils)\n- Full user task pipeline under real load\n- Router Node API + reverse proxy integration\n- $COR billing module on Sepolia\n- L3 execution + multi-oracle rotation\n- Session UI improvements from dev feedback\n\nDetails: https://docs.cortensor.network/community-and-ecosystem/community-testing/closed-alpha-testing-phase-4\nStatus: Complete",
   "Phase 5 Testing": "Our Focus:\n- CognitiveLevel (Node & Task Level) validation\n- Light Validator setup for PoI & PoUW\n- SessionPayment flow testing\n- Expanded user task model support\n- L3 experimentation & metadata rollup\n- App Registry groundwork\n- Public hackathon prep\n\nDetails: https://docs.cortensor.network/community-and-ecosystem/community-testing/closed-alpha-testing-phase-5\nStatus: Live Now",
-
+  "Phase 6 Testing": "Our Focus:\n- Node Level Rewards\n- Memory Index & GPU Benchmarks\n- SessionPayment Integration\n- Regression – Refactored Sessions\n- Oracles & Canary Testing\n- Privacy Prototyping\n- Validator Expansion Prototyping\n\nDetails: https://docs.cortensor.network/community-and-ecosystem/community-testing/closed-alpha-testing-phase-6\nStatus: Live Now",
+  
   // 📄 Documentation
   "Docs Cortensor": "Explore full project documentation here: https://docs.cortensor.network/community-and-ecosystem/community-testing/closed-alpha-testing-phase-5\nKey sections: Tokenomics, Partners, Roadmap, Team, etc.",
   "Medium": "Our official Medium page: https://cortensor.medium.com/",
 };
+
