@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+
+const submitLock = { locked: false };
 
 export default function AskCortensorAI({ isMenuActive }) {
   const [showAI, setShowAI] = useState(false);
@@ -26,6 +28,8 @@ export default function AskCortensorAI({ isMenuActive }) {
     "Google Gemma 3 4B Q4"
   ];
 
+  const responseBoxRef = useRef(null);
+
   useEffect(() => {
     let interval;
     if (aiLoading) {
@@ -38,18 +42,27 @@ export default function AskCortensorAI({ isMenuActive }) {
     return () => clearInterval(interval);
   }, [aiLoading]);
 
+  // 🔹 Auto scroll ke bawah setiap kali ada response baru
+  useEffect(() => {
+    if (responseBoxRef.current) {
+      responseBoxRef.current.scrollTop = responseBoxRef.current.scrollHeight;
+    }
+  }, [aiResponse]);
+
   const handleAskAI = async () => {
-    if (aiLoading) return;
+    if (aiLoading || submitLock.locked) return;
+    submitLock.locked = true;
+
     setAiLoading(true);
     setAiTime(null);
-    setAiResponse(""); 
+    setAiResponse("");
     setMinerProof(null);
     setValidMiner(null);
     setShowResponseBox(true);
     const start = Date.now();
 
     try {
-      const res = await fetch(process.env.NEXT_PUBLIC_API_URL, {
+      fetch(process.env.NEXT_PUBLIC_API_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -61,46 +74,59 @@ export default function AskCortensorAI({ isMenuActive }) {
           stream: false,
           timeout: 60,
         }),
-      });
+      }).catch((err) => console.error("Trigger error", err));
 
-      const data = await res.json();
-      const elapsed = ((Date.now() - start) / 1000).toFixed(2);
-      setAiTime(elapsed);
-      const aiResult =
-        data.choices?.[0]?.text ||
-        data.result ||
-        data.output ||
-        JSON.stringify(data, null, 2) ||
-        "⚠️ No response text";
-      setAiResponse(aiResult);
+      let attempts = 0;
+      const maxAttempts = 30;
+      const pollInterval = setInterval(async () => {
+        attempts++;
+        try {
+          const taskRes = await fetch(
+            `${process.env.NEXT_PUBLIC_API_TASK}/${process.env.NEXT_PUBLIC_SESSION_ID}`,
+            {
+              method: "GET",
+              headers: { Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_KEY}` },
+            }
+          );
 
-      const taskRes = await fetch(
-        `${process.env.NEXT_PUBLIC_API_TASK}/${process.env.NEXT_PUBLIC_SESSION_ID}`,
-        {
-          method: "GET",
-          headers: { Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_KEY}` },
+          const taskData = await taskRes.json();
+          if (taskData && taskData.tasks?.length > 0) {
+            const lastTask = taskData.tasks[taskData.tasks.length - 1];
+            const miners = lastTask.assigned_miners.map((m, idx) => ({
+              minerId: m,
+              result: lastTask.results[idx] || "",
+              hash: lastTask.results_hash[idx] || "",
+            }));
+            setMinerProof({ miners });
+
+            const valid = miners.find((miner) => miner.result?.trim()) || miners[0];
+            if (valid && valid.result) {
+           
+              const cleanedResult = valid.result.replace(/<\/s>/g, "").trim();
+              setValidMiner(valid);
+              setAiResponse(cleanedResult);
+              setAiTime(((Date.now() - start) / 1000).toFixed(2));
+              clearInterval(pollInterval);
+              setAiLoading(false);
+              submitLock.locked = false;
+            }
+          }
+        } catch (err) {
+          console.error("Polling error:", err);
         }
-      );
 
-      const taskData = await taskRes.json();
-      if (taskData && taskData.tasks?.length > 0) {
-        const lastTask = taskData.tasks[taskData.tasks.length - 1];
-        const miners = lastTask.assigned_miners.map((m, idx) => ({
-          minerId: m,
-          result: lastTask.results[idx] || "",
-          hash: lastTask.results_hash[idx] || "",
-        }));
-        setMinerProof({ miners });
-        const match = miners.find(
-          (miner) => miner.result?.trim() === aiResult.trim()
-        );
-        setValidMiner(match || miners[0]);
-      }
+        if (attempts >= maxAttempts) {
+          clearInterval(pollInterval);
+          setAiResponse("⚠️ Timeout waiting for miner response.");
+          setAiLoading(false);
+          submitLock.locked = false;
+        }
+      }, 2000);
     } catch (err) {
       console.error("[Error]", err);
       setAiResponse("⚠️ Error connecting to Cortensor node.");
-    } finally {
       setAiLoading(false);
+      submitLock.locked = false;
     }
   };
 
@@ -130,7 +156,7 @@ export default function AskCortensorAI({ isMenuActive }) {
                        items-center justify-center md:justify-end p-4"
           >
             {/* Miner Proof */}
-            {minerProof && (
+            {aiTime && minerProof && (
               <div className="w-full md:w-80 max-h-[30vh] md:max-h-[60vh] overflow-y-auto 
                               border rounded-2xl p-4 bg-white text-xs text-gray-700 shadow flex flex-col">
                 <strong>🔒 Secure By Cortensor</strong>
@@ -191,7 +217,7 @@ export default function AskCortensorAI({ isMenuActive }) {
                   <select
                     value={selectedModel}
                     onChange={(e) => setSelectedModel(e.target.value)}
-                    disabled={aiLoading} 
+                    disabled={aiLoading}
                     className="border rounded px-2 py-1 text-sm disabled:bg-gray-200 disabled:text-gray-500"
                   >
                     {modelOptions.map((m) => (
@@ -227,7 +253,7 @@ export default function AskCortensorAI({ isMenuActive }) {
                   value={aiPrompt}
                   onChange={(e) => setAiPrompt(e.target.value)}
                   placeholder="Type your question here..."
-                  disabled={aiLoading} 
+                  disabled={aiLoading}
                   className="w-full border rounded-lg p-2 text-sm mb-3 disabled:bg-gray-100 disabled:text-gray-500"
                   rows={2}
                 />
@@ -245,7 +271,11 @@ export default function AskCortensorAI({ isMenuActive }) {
               {/* DESKTOP */}
               <div className="hidden md:flex flex-col">
                 {showResponseBox && (
-                  <div className="relative border rounded-2xl p-4 bg-white text-sm whitespace-pre-line shadow mb-3">
+                  <div
+                    ref={responseBoxRef}
+                    className="relative border rounded-2xl p-4 bg-white text-sm whitespace-pre-line shadow mb-3 
+                               max-h-[50vh] overflow-y-auto"
+                  >
                     {aiTime && (
                       <div className="text-xs text-gray-400 text-right mb-1">
                         Response time: {aiTime}s
@@ -307,6 +337,3 @@ export default function AskCortensorAI({ isMenuActive }) {
     </>
   );
 }
-
-
-
