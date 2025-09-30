@@ -18,7 +18,8 @@ export const socialButtons = [
   { label: "X", icon: "✖" },
   { label: "LinkedIn", icon: "💼" },
   { label: "GitHub", icon: "🐙" },
-  { label: "Discord", icon: "💬" }
+  { label: "Discord", icon: "💬" },
+  { label: "Farcaster", icon: "📡" }
 ];
 
 export const testnetButtons = [
@@ -26,10 +27,12 @@ export const testnetButtons = [
   { label: "Phase 2 Testing", icon: "2️⃣" },
   { label: "Phase 3 Testing", icon: "3️⃣" },
   { label: "Phase 4 Testing", icon: "4️⃣" },
-  { label: "Phase 5 Testing", icon: "5️⃣" }
+  { label: "Phase 5 Testing", icon: "5️⃣" },
+  { label: "Phase 6 Testing", icon: "6️⃣" }
 ];
 
 export const docButtons = [
   { label: "Docs Cortensor", icon: "📚" },
   { label: "Medium", icon: "✍️" }
 ];
+
